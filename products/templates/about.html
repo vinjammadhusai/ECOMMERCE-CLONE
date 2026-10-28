@@ -1,0 +1,34 @@
+{# Public introduction to rgsai06 and how the shop serves its customers. #}
+{% extends 'base.html' %}
+
+{% block title %}About us — rgsai06{% endblock %}
+{% block content %}
+<section class="about-hero">
+    <span class="eyebrow">A little about us</span>
+    <h1>Good things for<br><span>everyday living.</span></h1>
+    <p>We’re rgsai06, an online shop built around useful finds, fair prices, and a smoother way to shop for the things you need.</p>
+    <div class="about-actions"><a class="button button-primary" href="{% url 'product_list' %}">Shop now <span aria-hidden="true">→</span></a><a class="button button-outline" href="#contact">Contact us</a></div>
+</section>
+
+<section class="about-story">
+    <div><span class="eyebrow">Who we are</span><h2>A shop for the things that make a day.</h2></div>
+    <p>rgsai06 brings everyday products together in one welcoming place. We want finding something useful, lovely, or just right to feel straightforward from browsing through checkout.</p>
+</section>
+
+<section class="about-mission">
+    <span class="eyebrow">Our mission</span><h2>Make everyday shopping feel easy.</h2>
+    <p>We aim to offer a simple, dependable shopping experience: clear product details, a smooth checkout, and friendly support when you need it.</p>
+</section>
+
+<section class="about-highlights">
+    <article class="benefit-card"><span class="benefit-icon icon-delivery">↗</span><h3>Thoughtful finds</h3><p>A curated selection of practical products for everyday life.</p></article>
+    <article class="benefit-card"><span class="benefit-icon icon-secure">✓</span><h3>Simple shopping</h3><p>Clear details and an easy path from product to order.</p></article>
+    <article class="benefit-card"><span class="benefit-icon icon-returns">♡</span><h3>Here to help</h3><p>We want every visit to feel helpful, comfortable, and human.</p></article>
+</section>
+
+<section class="about-contact" id="contact">
+    <div><span class="eyebrow">Need a hand?</span><h2>We’d love to hear from you.</h2><p>Get in touch with questions about products or your order.</p></div>
+    <div class="contact-details"><span>Email: hello@rgsai06.example</span><span>Phone: +91 00000 00000</span></div>
+    <a class="button button-primary" href="{% url 'product_list' %}">Shop now</a>
+</section>
+{% endblock %}

@@ -1,0 +1,45 @@
+
+{% extends "users/base.html" %}
+
+{% block title %}My Profile | RG Mart{% endblock %}
+
+{% block content %}
+<section class="profile-page">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">YOUR ACCOUNT</p>
+            <h1>My Profile</h1>
+        </div>
+    </div>
+
+    <div class="profile-card">
+        <div class="profile-avatar">
+            {{ request.user.username|first|upper }}
+        </div>
+
+        <h2>{{ request.user.username }}</h2>
+        <p class="profile-caption">RG Mart member</p>
+
+        <div class="profile-details">
+            <div class="detail-row">
+                <span>Username</span>
+                <strong>{{ request.user.username }}</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Email</span>
+                <strong>{{ request.user.email|default:"Not provided" }}</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Member since</span>
+                <strong>{{ request.user.date_joined|date:"d M Y" }}</strong>
+            </div>
+        </div>
+
+        <a href="{% url 'product_list' %}" class="btn btn-primary btn-full">
+            Continue Shopping →
+        </a>
+    </div>
+</section>
+{% endblock %}

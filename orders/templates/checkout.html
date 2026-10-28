@@ -1,0 +1,341 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RG Mart | Checkout</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            color: #222;
+        }
+
+        header {
+            background: #222;
+            color: white;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 27px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #ff3030;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: #777;
+        }
+
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 25px;
+            align-items: start;
+        }
+
+        .checkout-form,
+        .order-summary {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+        }
+
+        h2 {
+            font-size: 21px;
+            margin-bottom: 22px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            font-size: 15px;
+            font-family: inherit;
+        }
+
+        textarea {
+            min-height: 95px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #e60000;
+        }
+
+        .product-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+
+        .product-name {
+            font-weight: bold;
+        }
+
+        .product-quantity {
+            color: #777;
+            margin-top: 6px;
+        }
+
+        .product-price {
+            white-space: nowrap;
+            font-weight: bold;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 18px 0;
+            color: #555;
+        }
+
+        .total {
+            border-top: 1px solid #eee;
+            padding-top: 18px;
+            font-size: 21px;
+            font-weight: bold;
+            color: #222;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            text-align: center;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .place-order {
+            background: #e60000;
+            color: white;
+        }
+
+        .place-order:hover {
+            background: #bd0000;
+        }
+
+        .continue {
+            background: #eee;
+            color: #333;
+        }
+
+        .continue:hover {
+            background: #ddd;
+        }
+
+        .secure-note {
+            text-align: center;
+            color: #777;
+            font-size: 13px;
+            margin-top: 18px;
+        }
+
+        @media (max-width: 750px) {
+            .checkout-layout {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 18px 5%;
+            }
+
+            .container {
+                margin: 25px auto;
+                padding: 0 14px;
+            }
+
+            .checkout-form,
+            .order-summary {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo"><span>RG</span> MART</div>
+    <a href="{% url 'cart_detail' %}">← Back to Cart</a>
+</header>
+
+<div class="container">
+
+    <div class="page-title">
+        <h1>Checkout</h1>
+        <p>Review your order before completing your purchase.</p>
+    </div>
+
+    <div class="checkout-layout">
+
+        <div class="checkout-form">
+            <h2>Delivery Information</h2>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="full_name">Full Name</label>
+                    <input type="text"
+                           id="full_name"
+                           name="full_name"
+                           value="{{ request.user.get_full_name }}"
+                           placeholder="Enter your full name"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel"
+                           id="phone"
+                           name="phone"
+                           placeholder="Enter your phone number"
+                           pattern="[0-9]{10}"
+                           maxlength="10"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Delivery Address</label>
+                    <textarea id="address"
+                              name="address"
+                              placeholder="House number, street, area"
+                              required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text"
+                           id="city"
+                           name="city"
+                           placeholder="Enter your city"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pincode">PIN Code</label>
+                    <input type="text"
+                           id="pincode"
+                           name="pincode"
+                           placeholder="Enter 6-digit PIN code"
+                           pattern="[0-9]{6}"
+                           maxlength="6"
+                           required>
+                </div>
+
+                <button type="submit" class="btn place-order">
+                    Place Order →
+                </button>
+            </form>
+        </div>
+
+        <div class="order-summary">
+            <h2>Order Summary</h2>
+
+            {% for item in items %}
+                <div class="product-row">
+                    <div>
+                        <div class="product-name">
+                            {{ item.product.name }}
+                        </div>
+                        <div class="product-quantity">
+                            Quantity: {{ item.quantity }}
+                        </div>
+                    </div>
+
+                    <div class="product-price">
+                        ₹{{ item.subtotal }}
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span>₹{{ total }}</span>
+            </div>
+
+            <div class="summary-row">
+                <span>Delivery</span>
+                <span style="color: green;">Free</span>
+            </div>
+
+            <div class="summary-row total">
+                <span>Total</span>
+                <span>₹{{ total }}</span>
+            </div>
+
+            <a href="{% url 'cart_detail' %}" class="btn continue">
+                Edit Cart
+            </a>
+
+            <p class="secure-note">
+                Thank you for shopping with RG Mart!
+            </p>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

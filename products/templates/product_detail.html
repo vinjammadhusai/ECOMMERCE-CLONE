@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ product.name }}</title>
+</head>
+<body>
+    <a href="{% url 'product_list' %}">Back to Products</a>
+
+    <h1>{{ product.name }}</h1>
+
+    {% if product.image %}
+        <img src="{{ product.image.url }}"
+             alt="{{ product.name }}"
+             width="250">
+    {% endif %}
+
+    <p>{{ product.description }}</p>
+    <p>Category: {{ product.category }}</p>
+    <p>Price: ₹{{ product.price }}</p>
+    <p>Stock: {{ product.quantity }}</p>
+
+    {% if product.quantity > 0 %}
+        <form action="{% url 'cart_add' product.id %}" method="post">
+            {% csrf_token %}
+            <label>Quantity:</label>
+            <input type="number" name="quantity"
+                   value="1" min="1"
+                   max="{{ product.quantity }}">
+            <button type="submit">Add to Cart</button>
+        </form>
+    {% endif %}
+
+    {% if user.is_staff %}
+        <a href="{% url 'product_update' product.id %}">Edit</a>
+    {% endif %}
+</body>
+</html>

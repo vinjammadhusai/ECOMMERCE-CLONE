@@ -1,0 +1,36 @@
+
+{% extends "users/base.html" %}
+
+{% block title %}About | RG Mart{% endblock %}
+
+{% block content %}
+<section class="content-hero">
+    <p class="eyebrow">OUR STORY</p>
+    <h1>Shopping made <span>simple.</span></h1>
+    <p>
+        RG Mart is a Django-based e-commerce project designed to make
+        browsing products, managing an account and adding items to a cart
+        simple and convenient.
+    </p>
+</section>
+
+<section class="about-grid">
+    <article class="feature-card">
+        <div class="feature-icon lavender">◎</div>
+        <h3>Our mission</h3>
+        <p>Build a clear, user-friendly shopping experience.</p>
+    </article>
+
+    <article class="feature-card">
+        <div class="feature-icon peach">✦</div>
+        <h3>Our focus</h3>
+        <p>Simple navigation, secure login and organised product browsing.</p>
+    </article>
+</section>
+
+<div class="center-action">
+    <a href="{% url 'product_list' %}" class="btn btn-primary">
+        Start Exploring →
+    </a>
+</div>
+{% endblock %}

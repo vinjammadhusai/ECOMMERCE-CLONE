@@ -1,0 +1,382 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RG Mart | My Cart</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            color: #222;
+        }
+
+        header {
+            background: #222;
+            color: white;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 27px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .logo span {
+            color: #ff3030;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: #777;
+        }
+
+        .cart-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+            align-items: start;
+        }
+
+        .cart-items,
+        .summary {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+        }
+
+        .cart-items h2,
+        .summary h2 {
+            font-size: 21px;
+            margin-bottom: 20px;
+        }
+
+        .product {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-product-image {
+            width: 65px !important;
+            height: 65px !important;
+            min-width: 65px;
+            max-width: 65px !important;
+            max-height: 65px !important;
+            object-fit: contain;
+            background: #f8f8f8;
+            border-radius: 8px;
+            padding: 4px;
+            display: block;
+        }
+
+        .no-image {
+            width: 65px;
+            height: 65px;
+            min-width: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eee;
+            color: #777;
+            border-radius: 8px;
+            font-size: 11px;
+        }
+
+        .product-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .product-details h3 {
+            font-size: 17px;
+            margin-bottom: 8px;
+            overflow-wrap: anywhere;
+        }
+
+        .price {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .quantity {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 10px 0;
+        }
+
+        .quantity form {
+            display: inline;
+        }
+
+        .qty-btn {
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 6px;
+            background: #eee;
+            color: #222;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .qty-btn:hover {
+            background: #ddd;
+        }
+
+        .qty-number {
+            font-weight: bold;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        .subtotal {
+            font-weight: bold;
+            color: #222;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 18px 0;
+            color: #555;
+            gap: 12px;
+        }
+
+        .total {
+            border-top: 1px solid #eee;
+            padding-top: 18px;
+            font-size: 21px;
+            font-weight: bold;
+            color: #222;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            text-align: center;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .checkout {
+            background: #e60000;
+            color: white;
+        }
+
+        .checkout:hover {
+            background: #bd0000;
+        }
+
+        .continue {
+            color: #333;
+            background: #eee;
+        }
+
+        .continue:hover {
+            background: #ddd;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 45px 10px;
+        }
+
+        .empty-cart .emoji {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .empty-cart p {
+            color: #777;
+            margin: 12px 0;
+        }
+
+        @media (max-width: 750px) {
+            .cart-layout {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 18px 5%;
+            }
+
+            .container {
+                margin: 25px auto;
+                padding: 0 14px;
+            }
+
+            .cart-items,
+            .summary {
+                padding: 18px;
+            }
+
+            .product {
+                gap: 10px;
+            }
+
+            .product-details h3 {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo"><span>RG</span> MART</div>
+    <a href="/">← Continue Shopping</a>
+</header>
+
+<div class="container">
+
+    <div class="page-title">
+        <h1>My Shopping Cart 🛒</h1>
+        <p>Review your items before checkout.</p>
+    </div>
+
+    <div class="cart-layout">
+
+        <div class="cart-items">
+            <h2>Cart Items</h2>
+
+            {% for item in items %}
+
+            <div class="product">
+
+                {% if item.product.image %}
+                    <img src="{{ item.product.image.url }}"
+                         alt="{{ item.product.name }}"
+                         class="cart-product-image">
+                {% else %}
+                    <div class="no-image">No Image</div>
+                {% endif %}
+
+                <div class="product-details">
+
+                    <h3>{{ item.product.name }}</h3>
+
+                    <p class="price">
+                        Price: ₹{{ item.product.price }}
+                    </p>
+
+                    
+<div class="quantity">
+
+    <!-- Minus button -->
+    <form method="POST" action="{% url 'cart_update' item.id %}">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="decrease">
+        <button type="submit"
+                class="qty-btn"
+                aria-label="Decrease quantity">−</button>
+    </form>
+
+    <!-- Quantity -->
+    <span class="qty-number">{{ item.quantity }}</span>
+
+    <!-- Plus button -->
+    <form method="POST" action="{% url 'cart_update' item.id %}">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="increase">
+        <button type="submit"
+                class="qty-btn"
+                aria-label="Increase quantity">+</button>
+    </form>
+
+</div>
+
+
+                    <p class="subtotal">
+                        Subtotal: ₹{{ item.subtotal }}
+                    </p>
+
+                </div>
+            </div>
+
+            {% empty %}
+
+            <div class="empty-cart">
+                <div class="emoji">🛒</div>
+                <h2>Your cart is empty!</h2>
+                <p>Looks like you haven't added any products yet.</p>
+                <a href="/" class="btn checkout">Start Shopping</a>
+            </div>
+
+            {% endfor %}
+        </div>
+
+        <div class="summary">
+            <h2>Order Summary</h2>
+
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span>₹{{ total }}</span>
+            </div>
+
+            <div class="summary-row">
+                <span>Delivery</span>
+                <span style="color: green;">Calculated at checkout</span>
+            </div>
+
+            <div class="summary-row total">
+                <span>Total</span>
+                <span>₹{{ total }}</span>
+            </div>
+
+            {% if items %}
+                <a href="{% url 'checkout' %}" class="btn checkout">
+                    Proceed to Checkout →
+                </a>
+            {% endif %}
+
+            <a href="/" class="btn continue">Continue Shopping</a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

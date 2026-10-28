@@ -1,0 +1,68 @@
+
+{% extends "users/base.html" %}
+
+{% block title %}Home | RG Mart{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-copy">
+        <p class="eyebrow">YOUR EVERYDAY SHOPPING DESTINATION</p>
+        <h1>Good finds.<br><span>Great feelings.</span></h1>
+        <p>
+            Discover products you love, enjoy a simple shopping experience,
+            and find your next favourite item.
+        </p>
+
+        <div class="hero-actions">
+            <a href="{% url 'product_list' %}" class="btn btn-primary">
+                Explore Products →
+            </a>
+            <a href="{% url 'about' %}" class="btn btn-secondary">
+                About Us
+            </a>
+        </div>
+    </div>
+
+    <div class="hero-art">
+        <div class="art-circle"></div>
+        <div class="art-card">
+            <span class="art-emoji">🛍️</span>
+            <h3>Your next favourite</h3>
+            <p>Just a click away.</p>
+            <span class="art-stars">★ ★ ★ ★ ★</span>
+        </div>
+        <span class="floating-dot dot-one">✦</span>
+        <span class="floating-dot dot-two">✧</span>
+    </div>
+</section>
+
+<section class="section-block">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">MADE FOR YOU</p>
+            <h2>A better way to shop</h2>
+        </div>
+        <a href="{% url 'product_list' %}" class="text-link">View products →</a>
+    </div>
+
+    <div class="feature-grid">
+        <article class="feature-card">
+            <div class="feature-icon lavender">◇</div>
+            <h3>Explore Products</h3>
+            <p>Browse the available products and find something you need.</p>
+        </article>
+
+        <article class="feature-card">
+            <div class="feature-icon peach">♡</div>
+            <h3>Simple Shopping</h3>
+            <p>Add products to your cart and review your selections.</p>
+        </article>
+
+        <article class="feature-card">
+            <div class="feature-icon mint">✓</div>
+            <h3>Your Account</h3>
+            <p>Log in securely and manage your profile in one place.</p>
+        </article>
+    </div>
+</section>
+{% endblock %}

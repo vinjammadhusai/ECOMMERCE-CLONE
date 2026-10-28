@@ -1,0 +1,310 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RG Mart | Order History</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f6fa;
+            color: #222;
+        }
+
+        header {
+            background: #172337;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #ff4141;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 22px;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #ff4141;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 35px auto;
+            padding: 0 18px;
+        }
+
+        .page-title {
+            margin-bottom: 8px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .order-card {
+            background: white;
+            border-radius: 10px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 12px #0000000d;
+            border: 1px solid #eee;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-number {
+            font-weight: bold;
+            font-size: 17px;
+        }
+
+        .order-date {
+            color: #777;
+            font-size: 13px;
+            margin-top: 6px;
+        }
+
+        .status {
+            background: #e5f8eb;
+            color: #18833b;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .items {
+            padding: 15px 0;
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 9px 0;
+            font-size: 14px;
+        }
+
+        .item-name {
+            color: #444;
+        }
+
+        .item-price {
+            white-space: nowrap;
+            font-weight: 600;
+        }
+
+        .order-footer {
+            border-top: 1px solid #eee;
+            padding-top: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .total-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .total-amount {
+            color: #172337;
+            font-size: 21px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .empty {
+            background: white;
+            text-align: center;
+            padding: 55px 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px #0000000d;
+        }
+
+        .empty-icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .empty p {
+            color: #666;
+            margin: 12px 0 22px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #ff4141;
+            color: white;
+            padding: 11px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background: #e52f2f;
+        }
+
+        footer {
+            text-align: center;
+            color: #777;
+            padding: 25px 10px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 16px 5%;
+            }
+
+            nav a {
+                margin-left: 0;
+                margin-right: 14px;
+            }
+
+            .container {
+                margin-top: 25px;
+            }
+
+            .page-title {
+                font-size: 24px;
+            }
+
+            .order-card {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo"><span>RG</span> MART</div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="{% url 'product_list' %}">Products</a>
+        <a href="{% url 'cart_detail' %}">Cart</a>
+        <a href="{% url 'order_history' %}">My Orders</a>
+    </nav>
+</header>
+
+<main class="container">
+
+    <h1 class="page-title">My Orders</h1>
+    <p class="subtitle">View your previous orders and order details.</p>
+
+    {% if orders %}
+        {% for order in orders %}
+
+            <section class="order-card">
+
+                <div class="order-header">
+                    <div>
+                        <div class="order-number">
+                            Order #{{ order.id }}
+                        </div>
+
+                        {% if order.created_at %}
+                            <div class="order-date">
+                                Placed on {{ order.created_at|date:"d M Y, h:i A" }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <span class="status">
+                        {{ order.get_status_display }}
+                    </span>
+                </div>
+
+                <div class="items">
+                    {% for item in order.items.all %}
+                        <div class="item">
+                            <span class="item-name">
+                                {{ item.product_name }} × {{ item.quantity }}
+                            </span>
+
+                            <span class="item-price">
+                                ₹{{ item.price|floatformat:2 }}
+                            </span>
+                        </div>
+                    {% empty %}
+                        <p>No items found for this order.</p>
+                    {% endfor %}
+                </div>
+
+                <div class="order-footer">
+                    <div>
+                        <div class="total-label">Order Total</div>
+                        <div class="total-amount">
+                            ₹{{ order.total_amount|floatformat:2 }}
+                        </div>
+                    </div>
+
+                    <a href="{% url 'order_success' order.id %}" class="btn">
+                        View Order
+                    </a>
+                </div>
+
+            </section>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty">
+            <div class="empty-icon">📦</div>
+            <h2>No orders yet</h2>
+            <p>Your orders will appear here after you complete a purchase.</p>
+            <a href="{% url 'product_list' %}" class="btn">
+                Start Shopping
+            </a>
+        </div>
+
+    {% endif %}
+
+</main>
+
+<footer>
+    © RG MART. All rights reserved.
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}RG MART{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="nav-container">
+        
+
+
+<a class="brand" href="{% url 'home' %}">
+    <span style="color: red;">RG</span>
+    <span style="color: WHITE;">MART</span>
+</a>
+
+
+
+
+        <nav class="nav-links">
+            {% if user.is_authenticated %}
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'product_list' %}">Products</a>
+                <a href="{% url 'about' %}">About</a>
+                <a href="{% url 'profile' %}">Profile</a>
+                <a href="/cart/">Cart</a>
+
+                <form method="post" action="{% url 'logout' %}" class="logout-form">
+                    {% csrf_token %}
+                    <button class="nav-logout" type="submit">Logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}" class="nav-register">Register</a>
+            {% endif %}
+        </nav>
+    </div>
+</header>
+
+<main class="page-container">
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+    <p>© {% now "Y" %} RG Mart. Made for better shopping.</p>
+</footer>
+
+</body>
+</html>

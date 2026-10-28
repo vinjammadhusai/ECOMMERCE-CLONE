@@ -1,0 +1,56 @@
+
+{% extends "users/base.html" %}
+
+{% block title %}Create Account | RG Mart{% endblock %}
+
+{% block content %}
+<section class="auth-page">
+    <div class="auth-card">
+        <div class="auth-icon">✦</div>
+        <p class="eyebrow">JOIN RG Mart</p>
+        <h1>Create your account</h1>
+        <p class="auth-subtitle">
+            Register first, then log in to start shopping.
+        </p>
+
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+
+            {% for field in form %}
+                <div class="form-field">
+                    <label for="{{ field.id_for_label }}">
+                        {% if field.name == "password1" %}
+                            Password
+                        {% elif field.name == "password2" %}
+                            Confirm password
+                        {% else %}
+                            {{ field.label }}
+                        {% endif %}
+                    </label>
+
+                    {{ field }}
+
+                    {% for error in field.errors %}
+                        <p class="field-error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <button type="submit" class="btn btn-primary btn-full">
+                Create Account →
+            </button>
+        </form>
+
+        <p class="auth-switch">
+            Already registered?
+            <a href="{% url 'login' %}">Login here</a>
+        </p>
+    </div>
+</section>
+{% endblock %}
