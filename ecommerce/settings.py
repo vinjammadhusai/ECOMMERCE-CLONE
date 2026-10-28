@@ -25,7 +25,12 @@ SECRET_KEY = 'django-insecure-fx)$i!^i4bsh)#w(ht9c6q^=&06g(#yva11@d$m#_+!xm*xhv8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "ecommerce-gules-nu-85.vercel.app",
+    ".vercel.app",
+    "localhost",
+    "127.0.0.1",
+]
 
 
 # Application definition
